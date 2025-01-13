@@ -9,6 +9,7 @@ public class Game {
     private static final List<Player> winners = new ArrayList<>();
     private static final List<Player> losers = new ArrayList<>();
     private static final Referee referee = new Referee();
+    private static final ConsolePrinter consolePrinter = new ConsolePrinter();
 
     public void start() {
         System.out.println("""
@@ -24,7 +25,13 @@ public class Game {
         getPlayersBets();
 
         int result = referee.flip();
-        referee.showWinners(result, players, winners, losers);
+        consolePrinter.showFlipResult(result);
+
+        referee.selectWinnersAndLosers(result, players, winners, losers);
+
+        consolePrinter.showPlayersResults("Выиграл(и):", winners);
+        System.out.println();
+        consolePrinter.showPlayersResults("Проиграл(и):", losers);
     }
 
     private int selectNumberOfPlayers() {

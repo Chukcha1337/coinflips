@@ -27,7 +27,6 @@ public class IntegerMinMaxDialog implements Dialog<Integer> {
                     return number;
                 }
             }
-
             System.out.println(error);
         }
     }
