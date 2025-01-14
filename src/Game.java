@@ -1,15 +1,12 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Game {
 
     private static final String NUMBER_OF_PLAYERS_TEXT = "Введите количество игроков: ";
     private static final String ERROR_MESSAGE = "Ошибка ввода";
-    private static final List<Player> players = new ArrayList<>();
-    private static final List<Player> winners = new ArrayList<>();
-    private static final List<Player> losers = new ArrayList<>();
     private static final Referee referee = new Referee();
-    private static final ConsolePrinter consolePrinter = new ConsolePrinter();
+    private static final Printer printer = new Printer();
+    private static final Map<Player, Boolean> players = new LinkedHashMap<>();
 
     public void start() {
         System.out.println("""
@@ -25,12 +22,10 @@ public class Game {
         getPlayersBets();
 
         int flipResult = referee.flip();
-        consolePrinter.showFlipResult(flipResult);
+        printer.printFlipResult(flipResult);
 
-        referee.selectWinnersAndLosers(flipResult, players, winners, losers);
-
-        consolePrinter.showPlayersResults("Выиграл(и):", winners);
-        consolePrinter.showPlayersResults("Проиграл(и):", losers);
+        referee.setWinnerConditionForPlayers(flipResult, players);
+        printer.printPlayersResults("Выиграл(и)", "Проиграл(и)", players);
     }
 
     private int selectNumberOfPlayers() {
@@ -43,12 +38,13 @@ public class Game {
 
     private void createPlayers(int numberOfPlayers) {
         for (int i = 1; i <= numberOfPlayers; i++) {
-            players.add(new Player("Игрок %d".formatted(i)));
+            players.put(new Player("Игрок %d".formatted(i)), false);
         }
     }
 
     private void getPlayersBets() {
-        for (Player player : players) {
+        for (Map.Entry<Player, Boolean> entry : players.entrySet()) {
+            Player player = entry.getKey();
             player.bet(new IntegerMinMaxDialog(
                     "%s, введите вашу ставку (%d - %s, %d - %s): ".formatted(
                             player.getName(),

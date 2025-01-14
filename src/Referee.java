@@ -1,5 +1,5 @@
 
-import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Referee {
@@ -9,12 +9,10 @@ public class Referee {
         return RANDOM.nextInt(Coin.getSidesNumber());
     }
 
-    public void selectWinnersAndLosers(int result, List<Player> players, List<Player> winners, List<Player> losers) {
-        for (Player player : players) {
-            if (player.getPlayerBet() == result) {
-                winners.add(player);
-            } else {
-                losers.add(player);
+    public void setWinnerConditionForPlayers(int result, Map<Player, Boolean> players) {
+        for (Map.Entry<Player, Boolean> entry : players.entrySet()) {
+            if (entry.getKey().getPlayerBet() == result) {
+                entry.setValue(true);
             }
         }
     }
