@@ -24,13 +24,12 @@ public class Game {
         createPlayers(numberOfPlayers);
         getPlayersBets();
 
-        int result = referee.flip();
-        consolePrinter.showFlipResult(result);
+        int flipResult = referee.flip();
+        consolePrinter.showFlipResult(flipResult);
 
-        referee.selectWinnersAndLosers(result, players, winners, losers);
+        referee.selectWinnersAndLosers(flipResult, players, winners, losers);
 
         consolePrinter.showPlayersResults("Выиграл(и):", winners);
-        System.out.println();
         consolePrinter.showPlayersResults("Проиграл(и):", losers);
     }
 
