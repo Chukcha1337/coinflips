@@ -4,13 +4,14 @@ import java.util.stream.Collectors;
 public class ConsolePrinter {
 
 
-
     public void showPlayersResults(String title, List<Player> players) {
-        if (!players.isEmpty()) {String playersNames = players
-                .stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
-            System.out.println("\n" + title + "\n" + playersNames);}
+        if (!players.isEmpty()) {
+            String playersNames = players
+                    .stream()
+                    .map(Player::getName)
+                    .collect(Collectors.joining(", "));
+            System.out.println("\n" + title + "\n" + playersNames);
+        }
 
     }
 
